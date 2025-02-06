@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/equipamento.dart';
-import '../services/db_service.dart';
+import '../modelos/equipamento.dart';
+import '../servicos/db_service.dart';
 import '../widgets/equipamento_item.dart';
 
 class EquipamentosScreen extends StatelessWidget {

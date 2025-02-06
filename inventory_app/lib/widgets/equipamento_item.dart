@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/equipamento.dart';
+import '../modelos/equipamento.dart';
 
 class EquipamentoItem extends StatelessWidget {
   final Equipamento equipamento;

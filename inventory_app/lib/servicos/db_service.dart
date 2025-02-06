@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import '../models/equipamento.dart';
+import '../modelos/equipamento.dart';
 
 class DBService {
   Future<Database> _openDatabase() async {

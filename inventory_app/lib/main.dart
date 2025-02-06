@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
-import 'screens/equipamentos_screen.dart';
-import 'services/auth_service.dart';
+import 'telas/login_screen.dart';
+import 'telas/equipamentos_screen.dart';
+import 'servicos/auth_service.dart';
 
-void main() {
+Future<void> main() async {
   runApp(const MyApp());
 }
 
@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginScreen(), // Tela de login como inicial
+      home: LoginScreen(), // Tela de login como inicial
       routes: {
         '/equipamentos': (context) =>
-            const EquipamentosScreen(), // Navegação para a tela de equipamentos
+            EquipamentosScreen(), // Navegação para a tela de equipamentos
       },
     );
   }
