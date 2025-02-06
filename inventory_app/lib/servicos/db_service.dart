@@ -1,32 +1,30 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../modelos/equipamento.dart';
 
 class DBService {
-  Future<Database> _openDatabase() async {
-    final dbPath = await getDatabasesPath();
-    return openDatabase(
-      join(dbPath, 'inventario.db'),
-      version: 1,
-      onCreate: (db, version) {
-        return db.execute(
-          'CREATE TABLE equipamentos(id INTEGER PRIMARY KEY, nome TEXT, codigo TEXT, ultima_data TEXT)',
-        );
-      },
-    );
-  }
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  // Adicionar equipamento no Firestore
   Future<void> insertEquipamento(Equipamento equipamento) async {
-    final db = await _openDatabase();
-    await db.insert('equipamentos', equipamento.toMap());
+    try {
+      final docRef = _db.collection('equipamentos').doc();  // Gera um novo ID automaticamente
+      await docRef.set(equipamento.toMap());  // Salva os dados no Firestore
+    } catch (e) {
+      print("Erro ao adicionar equipamento: $e");
+    }
   }
 
+  // Obter lista de equipamentos do Firestore
   Future<List<Equipamento>> getEquipamentos() async {
-    final db = await _openDatabase();
-    final List<Map<String, dynamic>> maps = await db.query('equipamentos');
+    try {
+      final querySnapshot = await _db.collection('equipamentos').get();  // Consulta a coleção "equipamentos"
 
-    return List.generate(maps.length, (i) {
-      return Equipamento.fromMap(maps[i]);
-    });
+      return querySnapshot.docs.map((doc) {
+        return Equipamento.fromMap(doc.data() as Map<String, dynamic>);
+      }).toList();  // Retorna a lista de equipamentos
+    } catch (e) {
+      print("Erro ao obter equipamentos: $e");
+      return [];
+    }
   }
 }
