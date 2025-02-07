@@ -1,8 +1,8 @@
 class Equipamento {
-  final int id;
+  final String id;
   final String nome;
   final String codigo;
-  final DateTime ultimaData;
+  DateTime ultimaData; // Removido o 'final' para permitir a alteração da data
 
   Equipamento({
     required this.id,
@@ -11,7 +11,6 @@ class Equipamento {
     required this.ultimaData,
   });
 
-  // Método para converter o Equipamento em Map (para persistência no banco de dados)
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -21,7 +20,6 @@ class Equipamento {
     };
   }
 
-  // Método para criar um Equipamento a partir de um Map (do banco de dados)
   factory Equipamento.fromMap(Map<String, dynamic> map) {
     return Equipamento(
       id: map['id'],
@@ -29,5 +27,10 @@ class Equipamento {
       codigo: map['codigo'],
       ultimaData: DateTime.parse(map['ultima_data']),
     );
+  }
+
+  bool isInventoryValid() {
+    final thirtyDaysAgo = DateTime.now().subtract(Duration(days: 30));
+    return ultimaData.isAfter(thirtyDaysAgo);
   }
 }

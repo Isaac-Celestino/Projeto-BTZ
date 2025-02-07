@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// ignore: unused_import
 import 'package:firebase_auth/firebase_auth.dart';
 import '../servicos/auth_service.dart';
 
@@ -11,7 +10,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>(); // Chave do formulário
+  final _formKey = GlobalKey<FormState>();
 
   void _login() async {
     if (_formKey.currentState?.validate() ?? false) {
@@ -19,13 +18,11 @@ class _LoginScreenState extends State<LoginScreen> {
         await AuthService().login(_emailController.text, _passwordController.text);
         Navigator.pushReplacementNamed(context, '/equipamentos');
       } catch (e) {
-        print("Erro de login: $e");
         _showErrorDialog("Erro ao fazer login. Tente novamente.");
       }
     }
   }
 
-  // Função para mostrar o dialog de erro
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
@@ -51,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey, // Vinculando o formulário à chave
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
